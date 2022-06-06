@@ -1,0 +1,4 @@
+*.log
+cta-venv
+bucket-policy.json
+course_tutor_attrition.csv
