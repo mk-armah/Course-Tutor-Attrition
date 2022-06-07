@@ -1,0 +1,12 @@
+install:
+	pip install --upgrade pip &&\
+	pip install -r requirements.txt
+
+pep8:
+	autopep8 --in-place --aggressive --aggressive aws-config.py
+
+lint:
+	pylint --disable=R,C aws-config.py
+
+test:
+	python -m pytest -vv --conv=aws-config.py
