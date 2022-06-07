@@ -26,6 +26,9 @@ jobs:
         
     - name: Debuging action
       run: python -c "import os; print(os.listdir())"
+      
+    - name: Linux Debugging
+      run: bash -x ./autogen.sh
     
     - name: Install dependencies
       run: |
