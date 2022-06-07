@@ -1,7 +1,14 @@
 name: Aws-config Integrations
 
-on: [push]
-
+on:
+  # runs on pushes to the aws branch
+  push:
+    branches: [aws-config]
+    
+  # also runs inside pull requests that target the main branch
+#   pull_request:
+#     branches: [main]
+    
 jobs:
   build:
     runs-on: ubuntu-latest
