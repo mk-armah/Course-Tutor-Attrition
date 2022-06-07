@@ -14,27 +14,29 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.8", "3.9", "3.10"]
+        python-version: ["3.10"]
     
     steps:
     - uses: actions/checkout@v3
     
-    - name: Set up Python ${{ matrix.python-version }}  
+    - name: Set up Python  
       uses: actions/setup-python@v3
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version: 3.10
         
     - name: Debuging action
       run: python -c "import os; print(os.listdir())"
-      
-    - name: Linux Debugging
-      run: bash -x ./autogen.sh
     
     - name: Install dependencies
       run: |
-        make install
+        pip install --upgrade pip &&\
+            pip install requirements.txt
+            
+    - name: autopep8 support
+      run: |
+        autopep8 --in-place --aggressive --aggressive $(git ls-files '*.py')
     
     - name: Analysing the code with pylint
       run: |
-        make lint $(git ls-files '*.py')
+        pylint $(git ls-files '*.py')
     
