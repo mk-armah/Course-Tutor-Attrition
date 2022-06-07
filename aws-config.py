@@ -13,6 +13,7 @@ import boto3
 import json
 import argparse
 from botocore.exceptions import ClientError, EndpointConnectionError
+import os
 
 # configure logs
 logging.basicConfig(
@@ -67,6 +68,7 @@ def bucket_policy(policy_file_path: str, bucket_name: str):
     else:
         with open(policy_file_path, "r") as jsonfile:
             bucket_policy = json.load(jsonfile)
+            bucket_policy = json.dumps(bucket_policy)
         s3_client.put_bucket_policy(Bucket=bucket_name, Policy=bucket_policy)
 
 
@@ -147,7 +149,6 @@ if __name__ == "__main__":
         "-o",
         type=str,
         required=False,
-        default = "myfakeobject", ###
         help="object file path",
         metavar='')
 
@@ -155,7 +156,7 @@ if __name__ == "__main__":
         "--filename",
         "-f",
         type=str,
-        default="course_tutor_attrition_data",
+        default="myfile",
         help="name of the file object to be uploaded")
 
     args = parser.parse_args()
@@ -167,13 +168,13 @@ if __name__ == "__main__":
             raise
 
     elif args.upload_file:
-        if args.object!="myfakeobject": ###
+        if args.filename!="myfile": ###
             upload_file(args.filename, args.bucket, args.object)
         else:
             print("please provide object file")
 
     elif args.update_policy:
-        bucket_policy(args.policy_file)
+        bucket_policy(args.policy_file,args.bucket)
 
     else:
         print("No Action Specified")
